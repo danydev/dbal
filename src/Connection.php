@@ -1146,7 +1146,11 @@ class Connection
 
             return $res;
         } catch (Throwable $e) {
-            $this->rollBack();
+            try {
+                $this->rollBack();
+            } catch (Throwable $ex) {
+                // rollBack failed, fall-through to raise original exception below.
+            }
 
             throw $e;
         }

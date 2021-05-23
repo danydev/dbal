@@ -71,11 +71,11 @@ abstract class FunctionalTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        while ($this->connection->isTransactionActive()) {
-            $this->connection->rollBack();
-        }
-
         if ($this->isConnectionReusable) {
+            while ($this->connection->isTransactionActive()) {
+                $this->connection->rollBack();
+            }
+
             return;
         }
 
